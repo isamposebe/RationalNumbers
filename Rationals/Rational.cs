@@ -62,13 +62,20 @@ namespace Rationals
 
         private static int Gcd(int a, int b)
         {
-            while (b > 0)
+            if (a < 0)
+                a = -a;
+            if (b < 0)
+                b = -b;
+
+            while (a != 0 && b != 0)
             {
-                int rem = a % b;
-                a = b;
-                b = rem;
+                if (a > b)
+                    a %= b;
+                else
+                    b %= a;
             }
-            return a;
+
+            return a == 0 ? b : a;
         }
 
         public override string ToString()
