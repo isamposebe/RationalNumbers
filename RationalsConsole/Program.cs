@@ -1,5 +1,5 @@
-﻿using System;
-using Rationals;
+﻿using Rationals;
+using System;
 
 namespace RationalsConsole
 {
@@ -8,8 +8,8 @@ namespace RationalsConsole
         static void Main()
         {
             var a = new Rational(2, 4);
-            var b = new Rational(2, 4);
-            System.Console.WriteLine(a*b);
+            var b = new Rational(3, 4);
+            Console.WriteLine(a * b * new Rational(0));
         }
     }
 }

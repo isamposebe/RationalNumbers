@@ -13,19 +13,19 @@ namespace Rationals
         }
 
         /// <summary>
-        /// Constructs rational Numeratorber out of Numeratorerator and Denominatorominator.
+        /// Constructs rational numerator out of numerator and denominator.
         /// </summary>
-        public Rational(int Numeratorerator, int Denominatorominator)
+        public Rational(int numerator, int denominator)
         {
-            if (Denominatorominator == 0)
+            if (denominator == 0)
                 throw new DivideByZeroException("Denominator cannot be zero.");
 
-            Numerator = Numeratorerator;
-            Denominator = Denominatorominator;
+            Numerator = numerator;
+            Denominator = denominator;
         }
 
         /// <summary>
-        /// Numerator part of the rational Numeratorber.
+        /// Numerator part of the rational numerator.
         /// </summary>
         public int Numerator { get; set; }
 
@@ -81,7 +81,10 @@ namespace Rationals
         public override string ToString()
         {
             Simplify();
-            return $"{Numerator} / {Denominator}";
+            if (Numerator != 0)
+                return $"{Numerator} / {Denominator}";
+            else
+                return "0";
         }
     }
 }
