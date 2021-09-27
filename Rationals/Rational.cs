@@ -55,6 +55,7 @@ namespace Rationals
         /// </summary>
         public int Sign => IsNaN ? 0 : Math.Sign(Numerator) * Math.Sign(Denominator);
 
+
         public static Rational operator +(Rational a) => a;
         public static Rational operator -(Rational a) => new(-a.Numerator, a.Denominator);
 
@@ -74,6 +75,11 @@ namespace Rationals
             return new(a.Numerator * b.Denominator, a.Denominator * b.Numerator);
         }
 
+        /// <summary>
+        /// Checks equalty with other rational number
+        /// </summary>
+        /// <param name="other">Rational number</param>
+        /// <returns>Test of equalty</returns>
         public bool Equals(Rational other)
         {
             if (IsNaN)
@@ -85,6 +91,11 @@ namespace Rationals
             return (Numerator * other.Denominator).Equals(other.Numerator * Denominator);
         }
 
+        /// <summary>
+        /// Compares rational numbers with each other
+        /// </summary>
+        /// <param name="other">Rational number</param>
+        /// <returns></returns>
         public int CompareTo(Rational other)
         {
             if (IsNaN)
@@ -151,6 +162,10 @@ namespace Rationals
         /// </summary>
         public static bool operator >=(Rational left, Rational right) => !left.IsNaN && !right.IsNaN && left.CompareTo(right) >= 0;
 
+
+        /// <summary>
+        /// Simplifies rational number
+        /// </summary>
         private void Simplify()
         {
             var gcd = Gcd(Numerator, Denominator);
@@ -158,6 +173,12 @@ namespace Rationals
             Denominator /= gcd;
         }
 
+        /// <summary>
+        /// Finds greatest common divisor of two numbers
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
         private static int Gcd(int a, int b)
         {
             if (a < 0)
@@ -176,6 +197,10 @@ namespace Rationals
             return a == 0 ? b : a;
         }
 
+        /// <summary>
+        /// ToString override to pretty output
+        /// </summary>
+        /// <returns>Pretty string of rational number</returns>
         public override string ToString()
         {
             Simplify();
