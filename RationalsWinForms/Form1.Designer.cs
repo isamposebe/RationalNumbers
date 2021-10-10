@@ -92,6 +92,7 @@ namespace RationalsWinForms
             this.minus.TabStop = true;
             this.minus.Text = "-";
             this.minus.UseVisualStyleBackColor = true;
+            this.minus.CheckedChanged += new System.EventHandler(this.minus_CheckedChanged);
             // 
             // multiply
             // 
@@ -103,6 +104,7 @@ namespace RationalsWinForms
             this.multiply.TabStop = true;
             this.multiply.Text = "*";
             this.multiply.UseVisualStyleBackColor = true;
+            this.multiply.CheckedChanged += new System.EventHandler(this.multiply_CheckedChanged);
             // 
             // divide
             // 
@@ -114,6 +116,7 @@ namespace RationalsWinForms
             this.divide.TabStop = true;
             this.divide.Text = "/";
             this.divide.UseVisualStyleBackColor = true;
+            this.divide.CheckedChanged += new System.EventHandler(this.divide_CheckedChanged);
             // 
             // result
             // 

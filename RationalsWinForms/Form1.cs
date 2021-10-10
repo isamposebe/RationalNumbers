@@ -11,12 +11,6 @@ namespace RationalsWinForms
             InitializeComponent();
         }
 
-        /// <summary>
-        /// 0 +
-        /// 1 -
-        /// 2 *
-        /// 3 /
-        /// </summary>
         private static Operation state = Operation.Plus;
 
         private enum Operation
@@ -97,7 +91,22 @@ namespace RationalsWinForms
 
         private void plus_CheckedChanged(object sender, EventArgs e)
         {
+            state = Operation.Plus;
+        }
 
+        private void minus_CheckedChanged(object sender, EventArgs e)
+        {
+            state = Operation.Minus;
+        }
+
+        private void multiply_CheckedChanged(object sender, EventArgs e)
+        {
+            state = Operation.Multiply;
+        }
+
+        private void divide_CheckedChanged(object sender, EventArgs e)
+        {
+            state = Operation.Divide;
         }
     }
 }
