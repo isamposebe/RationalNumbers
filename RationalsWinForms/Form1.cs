@@ -1,20 +1,103 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Rationals;
+using System;
 using System.Windows.Forms;
 
 namespace RationalsWinForms
 {
-    public partial class Form1 : Form
+    public partial class Rationals : Form
     {
-        public Form1()
+        public Rationals()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// 0 +
+        /// 1 -
+        /// 2 *
+        /// 3 /
+        /// </summary>
+        private static Operation state = Operation.Plus;
+
+        private enum Operation
+        {
+            Plus,
+            Minus,
+            Multiply,
+            Divide,
+        }
+
+        private void evaluate_Click(object sender, EventArgs e)
+        {
+            var inputFirst = firstRational.Text.Split('/');
+            var inputSecond = secondRational.Text.Split('/');
+
+            var first = new string[2];
+            var second = new string[2];
+
+            if (inputFirst.Length == 1)
+            {
+                first[0] = inputFirst[0];
+                first[1] = "1";
+            }
+            else
+            {
+                first[0] = inputFirst[0];
+                first[1] = inputFirst[1];
+            }
+
+            if (inputSecond.Length == 1)
+            {
+                second[0] = inputSecond[0];
+                second[1] = "1";
+            }
+            else
+            {
+                second[0] = inputSecond[0];
+                second[1] = inputSecond[1];
+            }
+
+            switch (state)
+            {
+                case Operation.Plus:
+                    result.Text = (new Rational(int.Parse(first[0]), int.Parse(first[1])) +
+                           new Rational(int.Parse(second[0]), int.Parse(second[1]))).ToString();
+                    break;
+                case Operation.Minus:
+                    result.Text = (new Rational(int.Parse(first[0]), int.Parse(first[1])) -
+                           new Rational(int.Parse(second[0]), int.Parse(second[1]))).ToString();
+                    break;
+                case Operation.Multiply:
+                    result.Text = (new Rational(int.Parse(first[0]), int.Parse(first[1])) *
+                           new Rational(int.Parse(second[0]), int.Parse(second[1]))).ToString();
+                    break;
+                case Operation.Divide:
+                    result.Text = (new Rational(int.Parse(first[0]), int.Parse(first[1])) /
+                           new Rational(int.Parse(second[0]), int.Parse(second[1]))).ToString();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void firstRational_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void secondRational_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void plus_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
