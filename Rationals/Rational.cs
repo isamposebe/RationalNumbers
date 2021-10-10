@@ -2,7 +2,7 @@
 
 namespace Rationals
 {
-    public class Rational
+    public struct Rational
     {
         /// <summary>
         /// Constructs rational Numeratorber out of a whole Numeratorber.
@@ -209,16 +209,6 @@ namespace Rationals
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-
-            if (obj is null)
-            {
-                return false;
-            }
-
             throw new NotImplementedException();
         }
 
