@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.Contracts;
-using System.Numerics;
+﻿using System.Numerics;
 
 namespace Rationals;
 
@@ -22,7 +21,7 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
         Numerator = numerator;
         Denominator = denominator;
     }
-    
+
     /// <summary>
     ///     Ctor.
     /// </summary>
@@ -40,7 +39,7 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
         var gcd = BigInteger.GreatestCommonDivisor(Numerator, Denominator);
         return new Rational(Numerator / gcd, Denominator / gcd);
     }
-    
+
     /// <summary>
     ///     Numerator part of the rational numerator.
     /// </summary>
@@ -72,7 +71,6 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
     public int Sign => IsNaN ? 0 : Numerator.Sign * Denominator.Sign;
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="a"></param>
     /// <returns></returns>
@@ -82,7 +80,6 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
     }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="a"></param>
     /// <returns></returns>
@@ -92,7 +89,6 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
     }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="a"></param>
     /// <param name="b"></param>
@@ -104,7 +100,6 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
     }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="a"></param>
     /// <param name="b"></param>
@@ -115,7 +110,6 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
     }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="a"></param>
     /// <param name="b"></param>
@@ -126,7 +120,6 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
     }
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="a"></param>
     /// <param name="b"></param>
