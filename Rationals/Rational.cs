@@ -7,6 +7,10 @@ namespace Rationals;
 /// </summary>
 public struct Rational : IComparable<Rational>, IEquatable<Rational>
 {
+    private BigInteger Numerator { get; }
+
+    private BigInteger Denominator { get; }
+
     /// <summary>
     ///     Ctor.
     /// </summary>
@@ -31,6 +35,13 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
     }
 
     /// <summary>
+    ///     Ctor.
+    /// </summary>
+    public Rational() : this(BigInteger.One, BigInteger.One)
+    {
+    }
+
+    /// <summary>
     ///     Simplifies the numerator and denominator of a rational number.
     /// </summary>
     /// <returns>Reference to simplified version of a rational number.</returns>
@@ -39,16 +50,6 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
         var gcd = BigInteger.GreatestCommonDivisor(Numerator, Denominator);
         return new Rational(Numerator / gcd, Denominator / gcd);
     }
-
-    /// <summary>
-    ///     Numerator part of the rational numerator.
-    /// </summary>
-    public BigInteger Numerator { get; }
-
-    /// <summary>
-    ///     Denominator part of the rational number.
-    /// </summary>
-    public BigInteger Denominator { get; }
 
     /// <summary>
     ///     True if the number is equal to zero.
@@ -139,7 +140,7 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
     /// <returns>Rational with +1.</returns>
     public static Rational operator ++(Rational a)
     {
-        return a + new Rational(1);
+        return a + new Rational();
     }
 
     /// <summary>
@@ -149,7 +150,7 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
     /// <returns>Rational with -1.</returns>
     public static Rational operator --(Rational a)
     {
-        return a - new Rational(1);
+        return a - new Rational();
     }
 
     /// <summary>
@@ -226,12 +227,6 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
         return !other.IsNaN && (Numerator * other.Denominator).Equals(other.Numerator * Denominator);
     }
 
-    public override string ToString()
-    {
-        this = Simplify();
-        return $"{Numerator} / {Denominator}";
-    }
-
     public int CompareTo(Rational other)
     {
         if (IsNaN) return other.IsNaN ? 0 : -1;
@@ -240,8 +235,8 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
 
         if (Sign == other.Sign)
         {
-            var adjDenominator = BigInteger.Abs(Denominator) * other.Denominator.Sign;
-            var adjOtherDenominator = BigInteger.Abs(other.Denominator) * Denominator.Sign;
+            var adjDenominator = BigInteger.Abs(Denominator) * new BigInteger(other.Denominator.Sign);
+            var adjOtherDenominator = BigInteger.Abs(other.Denominator) * new BigInteger(Denominator.Sign);
             return (Numerator * adjOtherDenominator).CompareTo(other.Numerator * adjDenominator);
         }
 
@@ -249,6 +244,12 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
             return 1;
 
         return -1;
+    }
+
+    public override string ToString()
+    {
+        this = Simplify();
+        return $"{Numerator} / {Denominator}";
     }
 
     public override bool Equals(object? obj)
