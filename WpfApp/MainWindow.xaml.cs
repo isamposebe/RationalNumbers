@@ -1,9 +1,9 @@
-﻿using Rationals;
-using System;
+﻿using System;
 using System.Numerics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Rationals;
 
 namespace WpfApp;
 
@@ -30,24 +30,23 @@ public partial class MainWindow : Window
 
     private static bool Validate(TextBox box, out int value, bool isBot = false)
     {
-        if ((!int.TryParse(box.Text.Trim(), out value)) || (isBot && value is 0))
+        if (!int.TryParse(box.Text.Trim(), out value) || isBot && value is 0)
         {
             box.Background = Brushes.Red;
             return false;
         }
+
         box.Background = Brushes.White;
         return true;
     }
 
     private void Calculate(object sender, EventArgs e)
     {
-        if (!(Validate(TextBoxLeftSideTop, out int lTop) &&
-            Validate(TextBoxLeftSideBot, out int lBot, true) &&
-            Validate(TextBoxRightSideTop, out int rTop) &&
-            Validate(TextBoxRightSideBot, out int rBot, true)))
-        {
+        if (!(Validate(TextBoxLeftSideTop, out var lTop) &&
+              Validate(TextBoxLeftSideBot, out var lBot, true) &&
+              Validate(TextBoxRightSideTop, out var rTop) &&
+              Validate(TextBoxRightSideBot, out var rBot, true)))
             return;
-        }
 
         Rational left = new(
             new BigInteger(lTop),
@@ -58,8 +57,13 @@ public partial class MainWindow : Window
             new BigInteger(rBot)
         );
 
-        if (RadioButtonDivision.IsChecked is true)
+        if (RadioButtonDivision.IsChecked == true)
+        {
+            if (!(Validate(TextBoxLeftSideTop, out lTop, true) &&
+                  Validate(TextBoxRightSideTop, out rTop, true)))
+                return;
             LabelResult.Content = left / right;
+        }
         else if (RadioButtonMinus.IsChecked is true)
             LabelResult.Content = left - right;
         else if (RadioButtonMultiplication.IsChecked is true)
