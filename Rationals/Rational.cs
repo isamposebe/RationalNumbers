@@ -72,28 +72,31 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
     public int Sign => IsNaN ? 0 : Numerator.Sign * Denominator.Sign;
 
     /// <summary>
+    /// Опиратор сложения одного числа
     /// </summary>
-    /// <param name="a"></param>
-    /// <returns></returns>
+    /// <param name="a">число для сложения</param>
+    /// <returns>выполнения сложения</returns>
     public static Rational operator +(Rational a)
     {
         return a;
     }
 
     /// <summary>
+    /// Отрицание числа <param name="a">
     /// </summary>
-    /// <param name="a"></param>
-    /// <returns></returns>
+    /// <param name="a">Число для отрицания</param>
+    /// <returns>Выполнение оператора отрицания</returns>
     public static Rational operator -(Rational a)
     {
         return new Rational(-a.Numerator, a.Denominator);
     }
 
     /// <summary>
+    /// Операция сложения 2 чисел
     /// </summary>
-    /// <param name="a"></param>
-    /// <param name="b"></param>
-    /// <returns></returns>
+    /// <param name="a">Первое число для сложения</param>
+    /// <param name="b">Второе число для сложения</param>
+    /// <returns>Выполнения операции сложения двух чисел <param name="a"> и <param name="b"></returns>
     public static Rational operator +(Rational a, Rational b)
     {
         return new Rational(a.Numerator * b.Denominator + b.Numerator * a.Denominator,
@@ -101,30 +104,34 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
     }
 
     /// <summary>
+    /// Опирация вычитания чисел <param name="a"> и <param name="b">
+    /// Пример: 3 - 5 = -2, где 3 = a, 5 = b 
     /// </summary>
-    /// <param name="a"></param>
-    /// <param name="b"></param>
-    /// <returns></returns>
+    /// <param name="a">Уменьшаемое</param>
+    /// <param name="b">Вычитаемое </param>
+    /// <returns>Разность</returns>
     public static Rational operator -(Rational a, Rational b)
     {
         return a + -b;
     }
 
     /// <summary>
+    /// Операция умнажения 
     /// </summary>
-    /// <param name="a"></param>
-    /// <param name="b"></param>
-    /// <returns></returns>
+    /// <param name="a">первое число</param>
+    /// <param name="b">второе число</param>
+    /// <returns>Произведение</returns>
     public static Rational operator *(Rational a, Rational b)
     {
         return new Rational(a.Numerator * b.Numerator, a.Denominator * b.Denominator);
     }
 
     /// <summary>
+    /// Операция деления 
     /// </summary>
-    /// <param name="a"></param>
-    /// <param name="b"></param>
-    /// <returns></returns>
+    /// <param name="a">Делимое</param>
+    /// <param name="b">Делитель</param>
+    /// <returns>Частное</returns>
     /// <exception cref="DivideByZeroException"></exception>
     public static Rational operator /(Rational a, Rational b)
     {
