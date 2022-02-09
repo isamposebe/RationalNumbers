@@ -14,9 +14,9 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
     /// <summary>
     ///     Ctor.
     /// </summary>
-    /// <param name="numerator">Numerator</param>
-    /// <param name="denominator">Denominator</param>
-    /// <exception cref="DivideByZeroException">Throws when denominator is zero</exception>
+    /// <param name="numerator">Numerator.</param>
+    /// <param name="denominator">Denominator.</param>
+    /// <exception cref="DivideByZeroException">Throws when denominator is zero.</exception>
     public Rational(BigInteger numerator, BigInteger denominator)
     {
         if (denominator.IsZero)
@@ -29,7 +29,7 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
     /// <summary>
     ///     Ctor.
     /// </summary>
-    /// <param name="numerator">Numerator</param>
+    /// <param name="numerator">Numerator.</param>
     public Rational(BigInteger numerator) : this(numerator, BigInteger.One)
     {
     }
@@ -72,28 +72,31 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
     public int Sign => IsNaN ? 0 : Numerator.Sign * Denominator.Sign;
 
     /// <summary>
+    ///     Overload of the + operator before number.
     /// </summary>
-    /// <param name="a"></param>
-    /// <returns></returns>
+    /// <param name="a">Rational number.</param>
+    /// <returns>Same rational number.</returns>
     public static Rational operator +(Rational a)
     {
         return a;
     }
 
     /// <summary>
+    ///     Negation of a rational number.
     /// </summary>
-    /// <param name="a"></param>
-    /// <returns></returns>
+    /// <param name="a">Rational number.</param>
+    /// <returns>Rational number with negation.</returns>
     public static Rational operator -(Rational a)
     {
         return new Rational(-a.Numerator, a.Denominator);
     }
 
     /// <summary>
+    ///     The sum of two rational numbers.
     /// </summary>
-    /// <param name="a"></param>
-    /// <param name="b"></param>
-    /// <returns></returns>
+    /// <param name="a">Left side rational number.</param>
+    /// <param name="b">Right side rational number.</param>
+    /// <returns>A rational number from the sum of two rational numbers.</returns>
     public static Rational operator +(Rational a, Rational b)
     {
         return new Rational(a.Numerator * b.Denominator + b.Numerator * a.Denominator,
@@ -101,31 +104,34 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
     }
 
     /// <summary>
+    ///     The difference of two rational numbers.
     /// </summary>
-    /// <param name="a"></param>
-    /// <param name="b"></param>
-    /// <returns></returns>
+    /// <param name="a">Left side rational number.</param>
+    /// <param name="b">Right side rational number.</param>
+    /// <returns>Rational number from the difference of two rational numbers.</returns>
     public static Rational operator -(Rational a, Rational b)
     {
         return a + -b;
     }
 
     /// <summary>
+    ///     Multiplication of two rational numbers.
     /// </summary>
-    /// <param name="a"></param>
-    /// <param name="b"></param>
-    /// <returns></returns>
+    /// <param name="a">Left side rational number.</param>
+    /// <param name="b">Right side rational number.</param>
+    /// <returns>Rational number from the multiplication of two rational numbers.</returns>
     public static Rational operator *(Rational a, Rational b)
     {
         return new Rational(a.Numerator * b.Numerator, a.Denominator * b.Denominator);
     }
 
     /// <summary>
+    ///     Division of two rational numbers.
     /// </summary>
-    /// <param name="a"></param>
-    /// <param name="b"></param>
-    /// <returns></returns>
-    /// <exception cref="DivideByZeroException"></exception>
+    /// <param name="a">Left side rational number.</param>
+    /// <param name="b">Right side rational number.</param>
+    /// <returns>Rational number from the division of two rational numbers</returns>
+    /// <exception cref="DivideByZeroException">If the numerator of the right rational number is zero.</exception>
     public static Rational operator /(Rational a, Rational b)
     {
         if (b.Numerator == 0)
@@ -156,9 +162,9 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
     /// <summary>
     ///     Overload of the == operator.
     /// </summary>
-    /// <param name="left"></param>
-    /// <param name="right"></param>
-    /// <returns></returns>
+    /// <param name="left">Left side rational number.</param>
+    /// <param name="right">Right side rational number.</param>
+    /// <returns>Checks that two rational numbers are equal.</returns>
     public static bool operator ==(Rational left, Rational right)
     {
         return !left.IsNaN && !right.IsNaN && left.Equals(right);
@@ -167,9 +173,9 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
     /// <summary>
     ///     Overload of the != operator.
     /// </summary>
-    /// <param name="left"></param>
-    /// <param name="right"></param>
-    /// <returns></returns>
+    /// <param name="left">Left side rational number.</param>
+    /// <param name="right">Right side rational number.</param>
+    /// <returns>Produce negative equality of two rational numbers.</returns>
     public static bool operator !=(Rational left, Rational right)
     {
         return !(left == right);
@@ -178,9 +184,9 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
     /// <summary>
     ///     Overload of the &lt; operator.
     /// </summary>
-    /// <param name="left"></param>
-    /// <param name="right"></param>
-    /// <returns></returns>
+    /// <param name="left">Left side rational number.</param>
+    /// <param name="right">Right side rational number.</param>
+    /// <returns>Check that the left rational number is less than the right rational number.</returns>
     public static bool operator <(Rational left, Rational right)
     {
         return !left.IsNaN && !right.IsNaN && left.CompareTo(right) < 0;
@@ -189,9 +195,9 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
     /// <summary>
     ///     Overload of the &gt; operator.
     /// </summary>
-    /// <param name="left"></param>
-    /// <param name="right"></param>
-    /// <returns></returns>
+    /// <param name="left">Left side rational number.</param>
+    /// <param name="right">Right side rational number.</param>
+    /// <returns>Check that the left rational number is greater than the right rational number.</returns>
     public static bool operator >(Rational left, Rational right)
     {
         return !left.IsNaN && !right.IsNaN && left.CompareTo(right) > 0;
@@ -200,9 +206,9 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
     /// <summary>
     ///     Overload of the &lt;= operator.
     /// </summary>
-    /// <param name="left"></param>
-    /// <param name="right"></param>
-    /// <returns></returns>
+    /// <param name="left">Left side rational number.</param>
+    /// <param name="right">Right side rational number.</param>
+    /// <returns>Check that the left rational number is less than or equal to the right rational number.</returns>
     public static bool operator <=(Rational left, Rational right)
     {
         return !left.IsNaN && !right.IsNaN && left.CompareTo(right) <= 0;
@@ -211,9 +217,9 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
     /// <summary>
     ///     Overload of the &gt;= operator.
     /// </summary>
-    /// <param name="left"></param>
-    /// <param name="right"></param>
-    /// <returns></returns>
+    /// <param name="left">Left side rational number.</param>
+    /// <param name="right">Right side rational number.</param>
+    /// <returns>Check that the left rational number is greater than or equal to the right rational number.</returns>
     public static bool operator >=(Rational left, Rational right)
     {
         return !left.IsNaN && !right.IsNaN && left.CompareTo(right) >= 0;

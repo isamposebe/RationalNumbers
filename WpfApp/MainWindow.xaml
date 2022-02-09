@@ -4,6 +4,39 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Rationals" Height="450" Width="800">
-    <Grid />
+        Title="Rationals" Height="450" Width="1024"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ScaleTransform x:Key="WindowScaleTransform" ScaleX="2" ScaleY="2" />
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid LayoutTransform="{StaticResource WindowScaleTransform}">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="40">
+
+            <StackPanel>
+                <TextBox Height="16" Width="64" Name="TextBoxLeftSideTop" Text="1"/>
+                <Label>----------------------</Label>
+                <TextBox Height="16" Width="64" Name="TextBoxLeftSideBot" Text="1"/>
+            </StackPanel>
+
+            <StackPanel Margin="20,0,20,0" Name="StackPanel">
+                <RadioButton Name="RadioButtonPlus" GroupName="Sings" IsChecked="True">+</RadioButton>
+                <RadioButton Name="RadioButtonMinus" GroupName="Sings">-</RadioButton>
+                <RadioButton Name="RadioButtonMultiplication" GroupName="Sings">*</RadioButton>
+                <RadioButton Name="RadioButtonDivision" GroupName="Sings">/</RadioButton>
+            </StackPanel>
+
+            <StackPanel>
+                <TextBox Height="16" Width="64" Name="TextBoxRightSideTop" Text="1"/>
+                <Label>----------------------</Label>
+                <TextBox Height="16" Width="64" Name="TextBoxRightSideBot" Text="1"/>
+            </StackPanel>
+
+            <StackPanel Margin="0,16,0,16" Orientation="Horizontal">
+                <Label>=</Label>
+                <Label Name="LabelResult"></Label>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
 </Window>
