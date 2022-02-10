@@ -18,14 +18,6 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        TextBoxLeftSideTop.TextChanged += Calculate;
-        TextBoxLeftSideBot.TextChanged += Calculate;
-        TextBoxRightSideTop.TextChanged += Calculate;
-        TextBoxRightSideBot.TextChanged += Calculate;
-        RadioButtonPlus.Checked += Calculate;
-        RadioButtonDivision.Checked += Calculate;
-        RadioButtonMinus.Checked += Calculate;
-        RadioButtonMultiplication.Checked += Calculate;
     }
 
     private static bool Validate(TextBox box, out int value, bool isBot = false)
@@ -39,7 +31,7 @@ public partial class MainWindow : Window
         box.Background = Brushes.White;
         return true;
     }
-
+    /*
     private void Calculate(object sender, EventArgs e)
     {
         if (!(Validate(TextBoxLeftSideTop, out var lTop) &&
@@ -48,11 +40,11 @@ public partial class MainWindow : Window
               Validate(TextBoxRightSideBot, out var rBot, true)))
             return;
 
-        Rational left = new(
+        BigRational left = new(
             new BigInteger(lTop),
             new BigInteger(lBot)
         );
-        Rational right = new(
+        BigRational right = new(
             new BigInteger(rTop),
             new BigInteger(rBot)
         );
@@ -71,4 +63,5 @@ public partial class MainWindow : Window
         else
             LabelResult.Content = left + right;
     }
+    */
 }

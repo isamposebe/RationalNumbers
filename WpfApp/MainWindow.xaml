@@ -4,39 +4,67 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Rationals" Height="450" Width="1024"
+        Title="Rationals Calculator" Height="450" Width="1024"
         WindowStartupLocation="CenterScreen">
-    <Window.Resources>
-        <ResourceDictionary>
-            <ScaleTransform x:Key="WindowScaleTransform" ScaleX="2" ScaleY="2" />
-        </ResourceDictionary>
-    </Window.Resources>
-    <Grid LayoutTransform="{StaticResource WindowScaleTransform}">
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="40">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
 
-            <StackPanel>
-                <TextBox Height="16" Width="64" Name="TextBoxLeftSideTop" Text="1" />
-                <Label>----------------------</Label>
-                <TextBox Height="16" Width="64" Name="TextBoxLeftSideBot" Text="1" />
-            </StackPanel>
+        <Viewbox Grid.Column="0">
+            <TextBlock>1/3+2/3+4/3</TextBlock>
+        </Viewbox>
 
-            <StackPanel Margin="20,0,20,0" Name="StackPanel">
-                <RadioButton Name="RadioButtonPlus" GroupName="Sings" IsChecked="True">+</RadioButton>
-                <RadioButton Name="RadioButtonMinus" GroupName="Sings">-</RadioButton>
-                <RadioButton Name="RadioButtonMultiplication" GroupName="Sings">*</RadioButton>
-                <RadioButton Name="RadioButtonDivision" GroupName="Sings">/</RadioButton>
-            </StackPanel>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-            <StackPanel>
-                <TextBox Height="16" Width="64" Name="TextBoxRightSideTop" Text="1" />
-                <Label>----------------------</Label>
-                <TextBox Height="16" Width="64" Name="TextBoxRightSideBot" Text="1" />
-            </StackPanel>
+            <Viewbox>
+                <TextBox AcceptsReturn="True" Text="test" BorderThickness="0"/>
+            </Viewbox>
+            
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-            <StackPanel Margin="0,16,0,16" Orientation="Horizontal">
-                <Label>=</Label>
-                <Label Name="LabelResult" />
-            </StackPanel>
-        </StackPanel>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Margin="4" Grid.Row="0" Grid.Column="0">
+                    <Viewbox>
+                        <TextBlock>+</TextBlock>
+                    </Viewbox>
+                </Button>
+                <Button Margin="4" Grid.Row="0" Grid.Column="1">
+                    <Viewbox>
+                        <TextBlock>-</TextBlock>
+                    </Viewbox>
+                </Button>
+                <Button Margin="4" Grid.Row="1" Grid.Column="0">
+                    <Viewbox>
+                        <TextBlock>*</TextBlock>
+                    </Viewbox>
+                </Button>
+                <Button Margin="4" Grid.Row="1" Grid.Column="1">
+                    <Viewbox>
+                        <TextBlock>/</TextBlock>
+                    </Viewbox>
+                </Button>
+            </Grid>
+
+            <Button Margin="4" FontSize="32" Grid.Row="2">
+                <Viewbox>
+                    <TextBlock>=</TextBlock>
+                </Viewbox>
+            </Button>
+        </Grid>
     </Grid>
 </Window>
