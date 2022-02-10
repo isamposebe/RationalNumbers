@@ -8,32 +8,32 @@ public class RationalsTest
     [Fact]
     public void TestSum()
     {
-        var a = new Rational(2, 3);
-        var b = new Rational(2, 3);
-        Assert.True((a + b).Equals(new Rational(4, 3)));
+        var a = new BigRational(2, 3);
+        var b = new BigRational(2, 3);
+        Assert.True((a + b).Equals(new BigRational(4, 3)));
     }
 
     [Fact]
     public void TestMinus()
     {
-        var a = new Rational(3, 3);
-        var b = new Rational(2, 3);
-        Assert.True((a - b).Equals(new Rational(1, 3)));
+        var a = new BigRational(3, 3);
+        var b = new BigRational(2, 3);
+        Assert.True((a - b).Equals(new BigRational(1, 3)));
     }
 
     [Fact]
     public void TestMultiplication()
     {
-        var a = new Rational(3, 3);
-        var b = new Rational(2, 3);
-        Assert.True((a * b).Equals(new Rational(6, 9)));
+        var a = new BigRational(3, 3);
+        var b = new BigRational(2, 3);
+        Assert.True((a * b).Equals(new BigRational(6, 9)));
     }
 
     [Fact]
     public void TestDivide()
     {
-        var a = new Rational(3, 3);
-        var b = new Rational(2, 3);
-        Assert.True((a / b).Equals(new Rational(3, 2)));
+        var a = new BigRational(3, 3);
+        var b = new BigRational(2, 3);
+        Assert.True((a / b).Equals(new BigRational(3, 2)));
     }
 }

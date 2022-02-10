@@ -1,5 +1,5 @@
 ﻿using Rationals;
 
-Rational a = new(2, 3);
-Rational b = new(1, 5);
-Console.WriteLine(a + b - new Rational(52, 15));
+BigRational a = new(2, 3);
+BigRational b = new(1, 5);
+Console.WriteLine(a + b - new BigRational(52, 15));
