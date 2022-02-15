@@ -1,9 +1,8 @@
-﻿using System;
-using System.Numerics;
+﻿using Rationals;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Rationals;
 
 namespace WpfApp;
 
@@ -48,14 +47,8 @@ public partial class MainWindow : Window
               Validate(TextBoxRightSideBot, out var rBot, true)))
             return;
 
-        Rational left = new(
-            new BigInteger(lTop),
-            new BigInteger(lBot)
-        );
-        Rational right = new(
-            new BigInteger(rTop),
-            new BigInteger(rBot)
-        );
+        Rational left = new(lTop, lBot);
+        Rational right = new(rTop, rBot);
 
         if (RadioButtonDivision.IsChecked == true)
         {
