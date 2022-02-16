@@ -8,8 +8,10 @@ public sealed class RationalNumbersTest
     [Fact]
     public void Sum()
     {
-        Assert.True((new Rational(1, 3) +
-                     new Rational(2, 3)).AsDouble() == 3.3);
+        var a = new Rational(1, 4);
+        var b = new Rational(2, 4);
+        var rez = (a + b).AsDouble();
+        Assert.True(rez == 0.75);
     }
 
     [Fact]
@@ -35,4 +37,21 @@ public sealed class RationalNumbersTest
         var b = new Rational(2, 3);
         Assert.True((a / b).Equals(new Rational(3, 2)));
     }
+    [Fact]
+    public void Test1()
+    {
+        var a = new Rational(1);
+        var b = new Rational(2);
+        Assert.True((a / b).Equals(new Rational(1, 2)));
+    }
+    [Fact]
+    public void Test2()
+    {
+        var a = new Rational(1);
+        var b = new Rational(2);
+        var d = new Rational(2, 3);
+        var c = (a / b)+d;
+        Assert.True(c.Equals(new Rational(7, 6)));
+    }
+
 }
