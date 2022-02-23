@@ -35,7 +35,7 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
     /// <summary>
     ///     Ctor.
     /// </summary>
-    public Rational() : this(1, 1)
+    public Rational() : this(0, 1)
     {
     }
 
