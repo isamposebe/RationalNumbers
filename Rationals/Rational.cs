@@ -15,28 +15,13 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
     /// <param name="numerator">Numerator.</param>
     /// <param name="denominator">Denominator.</param>
     /// <exception cref="DivideByZeroException">Throws when denominator is zero.</exception>
-    public Rational(int numerator, int denominator)
+    public Rational(int numerator = 0, int denominator = 1)
     {
         if (denominator == 0)
             throw new DivideByZeroException("Denominator cannot be zero.");
 
         Numerator = numerator;
         Denominator = denominator;
-    }
-
-    /// <summary>
-    ///     Ctor.
-    /// </summary>
-    /// <param name="numerator">Numerator.</param>
-    public Rational(int numerator) : this(numerator, 1)
-    {
-    }
-
-    /// <summary>
-    ///     Ctor.
-    /// </summary>
-    public Rational() : this(0, 1)
-    {
     }
 
     /// <summary>
