@@ -78,7 +78,6 @@ public partial class MainWindow : Window
     /// <exception cref="NotImplementedException"></exception>
     private static void UpData(out Rational rationalOne, out Rational rationalTwo)
     {
-        // 3 try/catch
 
         // Ввод данных из TexBox в переменые
         rationalOne = AssemblyNumber(ParseInt(TextBoxInputInteger1.Text),
