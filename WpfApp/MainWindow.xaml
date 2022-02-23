@@ -67,11 +67,11 @@
 
                 <!--Поля для ввода-->
                 <Viewbox Grid.Row="2"  Grid.Column="0" Grid.RowSpan="3">
-                    <TextBox AcceptsReturn="True" Name="TextBoxInputInteger1" Text="test_rez" BorderThickness="0"/>
+                    <TextBox AcceptsReturn="True" Name="TextBoxInputInteger1" Text="" BorderThickness="0"/>
                 </Viewbox>
 
                 <Viewbox Grid.Row="2"  Grid.Column="1">
-                    <TextBox AcceptsReturn="True" Name="TextBoxInputNumerator1" Text="test_data" BorderThickness="0"/>
+                    <TextBox AcceptsReturn="True" Name="TextBoxInputNumerator1" Text="13" BorderThickness="0"/>
                 </Viewbox>
                 <Polyline Stroke="Black" StrokeThickness="15" Grid.Row="3" Grid.Column="1" StrokeEndLineCap="Triangle"  SnapsToDevicePixels="True"
          Points="10,10  200,10" >
@@ -81,7 +81,7 @@
 
 
                 <Viewbox Grid.Row="4"  Grid.Column="1">
-                    <TextBox AcceptsReturn="True" Name="TextBoxInputDenominator1" Text="test_data1" BorderThickness="0"/>
+                    <TextBox AcceptsReturn="True" Name="TextBoxInputDenominator1" Text="12" BorderThickness="0"/>
                 </Viewbox>
             </Grid>
             <!--Блок кнопок-->
@@ -145,11 +145,11 @@
 
                 <!--Поля для ввода-->
                 <Viewbox Grid.Row="2"  Grid.Column="0" Grid.RowSpan="3">
-                    <TextBox AcceptsReturn="True" Name="TextBoxInputInteger2" Text="test_rez" BorderThickness="0"/>
+                    <TextBox AcceptsReturn="True" Name="TextBoxInputInteger2" Text="2" BorderThickness="0"/>
                 </Viewbox>
 
                 <Viewbox Grid.Row="2"  Grid.Column="1">
-                    <TextBox AcceptsReturn="True" Name="TextBoxInputNumerator2" Text="test_data" BorderThickness="0"/>
+                    <TextBox AcceptsReturn="True" Name="TextBoxInputNumerator2" Text="1" BorderThickness="0"/>
                 </Viewbox>
                 
                 <Polyline Stroke="Black" StrokeThickness="15" Grid.Row="3" Grid.Column="1" StrokeEndLineCap="Triangle"  SnapsToDevicePixels="True"
@@ -157,7 +157,7 @@
                 </Polyline>
                 
                 <Viewbox Grid.Row="4"  Grid.Column="1">
-                    <TextBox AcceptsReturn="True" Name="TextBoxInputDenominator2" Text="test_data1" BorderThickness="0"/>
+                    <TextBox AcceptsReturn="True" Name="TextBoxInputDenominator2" Text="3" BorderThickness="0"/>
                 </Viewbox>
             </Grid>
 
@@ -182,11 +182,11 @@
             </Viewbox>
             <!--Отображение результата-->
             <Viewbox Grid.Row="1"  Grid.Column="0">
-                <TextBox AcceptsReturn="True" Name="TextBoxOrd" Text="test_data1" BorderThickness="0"/>
+                <TextBox AcceptsReturn="True" Name="TextBoxOrd" Text="Тута Результат" BorderThickness="0"/>
             </Viewbox>
             
             <Viewbox Grid.Row="1"  Grid.Column="2">
-                <TextBox AcceptsReturn="True" Name="TextBoxDecimalsForm" Text="test_data1" BorderThickness="0"/>
+                <TextBox AcceptsReturn="True" Name="TextBoxDecimalsForm" Text="Тут Результат" BorderThickness="0"/>
             </Viewbox>
 
         </Grid>
