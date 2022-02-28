@@ -1,15 +1,13 @@
-﻿using System.Numerics;
-
-namespace Rationals;
+﻿namespace Rationals;
 
 /// <summary>
-///     Rational number with large arbitary integers.
+///     Rational number with general operations and conversion from and to double number.
 /// </summary>
-public struct BigRational : IComparable<BigRational>, IEquatable<BigRational>
+public struct Rational : IComparable<Rational>, IEquatable<Rational>
 {
-    private BigInteger Numerator { get; }
+    private int Numerator { get; }
 
-    private BigInteger Denominator { get; }
+    private int Denominator { get; }
 
     /// <summary>
     ///     Ctor.
@@ -17,9 +15,9 @@ public struct BigRational : IComparable<BigRational>, IEquatable<BigRational>
     /// <param name="numerator">Numerator.</param>
     /// <param name="denominator">Denominator.</param>
     /// <exception cref="DivideByZeroException">Throws when denominator is zero.</exception>
-    public BigRational(BigInteger numerator, BigInteger denominator)
+    public Rational(int numerator = 0, int denominator = 1)
     {
-        if (denominator.IsZero)
+        if (denominator == 0)
             throw new DivideByZeroException("Denominator cannot be zero.");
 
         Numerator = numerator;
@@ -29,32 +27,117 @@ public struct BigRational : IComparable<BigRational>, IEquatable<BigRational>
     /// <summary>
     ///     Ctor.
     /// </summary>
-    /// <param name="numerator">Numerator.</param>
-    public BigRational(BigInteger numerator) : this(numerator, BigInteger.One)
+    /// <param name="number">Double number that we convert to rational number</param>
+    /// <param name="bound">Max lenght of denominator</param>
+    public Rational(double number, double bound = 4096.0) : this()
     {
+        if (number == 0.0)
+        {
+            Numerator = 0;
+            Denominator = 1;
+        }
+
+        var (best, temp) = FindBestApproximation(number, bound);
+
+        Numerator = (int) Math.Round(best * temp) * Math.Sign(number);
+        Denominator = best;
     }
 
     /// <summary>
     ///     Ctor.
+    ///     For ex.: "1/3"; "1"; "   1/3   "; "0.666";
     /// </summary>
-    public BigRational() : this(BigInteger.One, BigInteger.One)
+    /// <param name="input">String.</param>
+    /// <exception cref="DivideByZeroException">Throws when denominator is zero.</exception>
+    public Rational(string input)
     {
+        var trimmed = input.Trim();
+        if (trimmed.Contains('/'))
+        {
+            var parsed = trimmed.Split('/').Select(int.Parse).ToArray();
+            if (parsed[1] == 0)
+            {
+                throw new DivideByZeroException("Denominator cannot be zero.");
+            }
+
+            Numerator = parsed[0];
+            Denominator = parsed[1];
+        }
+        else if (trimmed.Split('.').Length is 2 or 1)
+        {
+            double number;
+            try
+            {
+                number = double.Parse(trimmed);
+            }
+            catch (FormatException)
+            {
+                number = 0;
+            }
+
+            if (number == 0.0)
+            {
+                Numerator = 0;
+                Denominator = 1;
+            }
+
+            var (best, temp) = FindBestApproximation(number, 4096);
+
+            Numerator = (int) Math.Round(best * temp) * Math.Sign(number);
+            Denominator = best;
+        }
+        else
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="number"></param>
+    /// <param name="bound"></param>
+    /// <returns></returns>
+    private static (int best, double temp) FindBestApproximation(double number, double bound)
+    {
+        var temp = Math.Abs(number);
+        var best = 1;
+        var bestError = double.MaxValue;
+
+        for (var i = 1; i < bound; i++)
+        {
+            var error = Math.Abs(i * temp - Math.Round(i * temp));
+            if (!(error < bestError)) continue;
+            best = i;
+            bestError = error;
+        }
+
+        return (best, temp);
+    }
+
+    /// <summary>
+    ///     Convert rational number to double double number.
+    /// </summary>
+    /// <returns>Division between numerator and denominator.</returns>
+    public double AsDouble()
+    {
+        return (double) Numerator / Denominator;
     }
 
     /// <summary>
     ///     Simplifies the numerator and denominator of a rational number.
     /// </summary>
     /// <returns>Reference to simplified version of a rational number.</returns>
-    public BigRational Simplify()
+    public Rational Simplify()
     {
-        var gcd = BigInteger.GreatestCommonDivisor(Numerator, Denominator);
-        return new BigRational(Numerator / gcd, Denominator / gcd);
+        var gcd = GreatestCommonDivisor(Numerator, Denominator);
+        return new Rational(Numerator / gcd, Denominator / gcd);
     }
 
     /// <summary>
     ///     True if the number is equal to zero.
     /// </summary>
-    public bool IsZero => !IsNaN && Numerator.IsZero;
+    public bool IsZero => !IsNaN && Numerator == 0;
 
     /// <summary>
     ///     True if the number is equal to one.
@@ -64,19 +147,19 @@ public struct BigRational : IComparable<BigRational>, IEquatable<BigRational>
     /// <summary>
     ///     True if the value is not a number.
     /// </summary>
-    public bool IsNaN => Denominator.IsZero;
+    public bool IsNaN => Denominator == 0;
 
     /// <summary>
     ///     Gets a number that indicates the sign (negative, positive, or zero) of the rational number.
     /// </summary>
-    public int Sign => IsNaN ? 0 : Numerator.Sign * Denominator.Sign;
+    public int Sign => IsNaN ? 0 : Math.Sign(Numerator) * Math.Sign(Denominator);
 
     /// <summary>
     ///     Overload of the + operator before number.
     /// </summary>
     /// <param name="a">Rational number.</param>
     /// <returns>Same rational number.</returns>
-    public static BigRational operator +(BigRational a)
+    public static Rational operator +(Rational a)
     {
         return a;
     }
@@ -86,9 +169,9 @@ public struct BigRational : IComparable<BigRational>, IEquatable<BigRational>
     /// </summary>
     /// <param name="a">Rational number.</param>
     /// <returns>Rational number with negation.</returns>
-    public static BigRational operator -(BigRational a)
+    public static Rational operator -(Rational a)
     {
-        return new BigRational(-a.Numerator, a.Denominator);
+        return new Rational(-a.Numerator, a.Denominator);
     }
 
     /// <summary>
@@ -97,9 +180,9 @@ public struct BigRational : IComparable<BigRational>, IEquatable<BigRational>
     /// <param name="a">Left side rational number.</param>
     /// <param name="b">Right side rational number.</param>
     /// <returns>A rational number from the sum of two rational numbers.</returns>
-    public static BigRational operator +(BigRational a, BigRational b)
+    public static Rational operator +(Rational a, Rational b)
     {
-        return new BigRational(a.Numerator * b.Denominator + b.Numerator * a.Denominator,
+        return new Rational(a.Numerator * b.Denominator + b.Numerator * a.Denominator,
             a.Denominator * b.Denominator);
     }
 
@@ -109,7 +192,7 @@ public struct BigRational : IComparable<BigRational>, IEquatable<BigRational>
     /// <param name="a">Left side rational number.</param>
     /// <param name="b">Right side rational number.</param>
     /// <returns>Rational number from the difference of two rational numbers.</returns>
-    public static BigRational operator -(BigRational a, BigRational b)
+    public static Rational operator -(Rational a, Rational b)
     {
         return a + -b;
     }
@@ -120,9 +203,9 @@ public struct BigRational : IComparable<BigRational>, IEquatable<BigRational>
     /// <param name="a">Left side rational number.</param>
     /// <param name="b">Right side rational number.</param>
     /// <returns>Rational number from the multiplication of two rational numbers.</returns>
-    public static BigRational operator *(BigRational a, BigRational b)
+    public static Rational operator *(Rational a, Rational b)
     {
-        return new BigRational(a.Numerator * b.Numerator, a.Denominator * b.Denominator);
+        return new Rational(a.Numerator * b.Numerator, a.Denominator * b.Denominator);
     }
 
     /// <summary>
@@ -132,11 +215,11 @@ public struct BigRational : IComparable<BigRational>, IEquatable<BigRational>
     /// <param name="b">Right side rational number.</param>
     /// <returns>Rational number from the division of two rational numbers</returns>
     /// <exception cref="DivideByZeroException">If the numerator of the right rational number is zero.</exception>
-    public static BigRational operator /(BigRational a, BigRational b)
+    public static Rational operator /(Rational a, Rational b)
     {
         if (b.Numerator == 0)
             throw new DivideByZeroException("Denominator cannot be zero.");
-        return new BigRational(a.Numerator * b.Denominator, a.Denominator * b.Numerator);
+        return new Rational(a.Numerator * b.Denominator, a.Denominator * b.Numerator);
     }
 
     /// <summary>
@@ -144,9 +227,9 @@ public struct BigRational : IComparable<BigRational>, IEquatable<BigRational>
     /// </summary>
     /// <param name="a">Rational number.</param>
     /// <returns>Rational with +1.</returns>
-    public static BigRational operator ++(BigRational a)
+    public static Rational operator ++(Rational a)
     {
-        return a + new BigRational();
+        return a + new Rational();
     }
 
     /// <summary>
@@ -154,9 +237,9 @@ public struct BigRational : IComparable<BigRational>, IEquatable<BigRational>
     /// </summary>
     /// <param name="a">Rational number.</param>
     /// <returns>Rational with -1.</returns>
-    public static BigRational operator --(BigRational a)
+    public static Rational operator --(Rational a)
     {
-        return a - new BigRational();
+        return a - new Rational();
     }
 
     /// <summary>
@@ -165,7 +248,7 @@ public struct BigRational : IComparable<BigRational>, IEquatable<BigRational>
     /// <param name="left">Left side rational number.</param>
     /// <param name="right">Right side rational number.</param>
     /// <returns>Checks that two rational numbers are equal.</returns>
-    public static bool operator ==(BigRational left, BigRational right)
+    public static bool operator ==(Rational left, Rational right)
     {
         return !left.IsNaN && !right.IsNaN && left.Equals(right);
     }
@@ -176,7 +259,7 @@ public struct BigRational : IComparable<BigRational>, IEquatable<BigRational>
     /// <param name="left">Left side rational number.</param>
     /// <param name="right">Right side rational number.</param>
     /// <returns>Produce negative equality of two rational numbers.</returns>
-    public static bool operator !=(BigRational left, BigRational right)
+    public static bool operator !=(Rational left, Rational right)
     {
         return !(left == right);
     }
@@ -187,7 +270,7 @@ public struct BigRational : IComparable<BigRational>, IEquatable<BigRational>
     /// <param name="left">Left side rational number.</param>
     /// <param name="right">Right side rational number.</param>
     /// <returns>Check that the left rational number is less than the right rational number.</returns>
-    public static bool operator <(BigRational left, BigRational right)
+    public static bool operator <(Rational left, Rational right)
     {
         return !left.IsNaN && !right.IsNaN && left.CompareTo(right) < 0;
     }
@@ -198,7 +281,7 @@ public struct BigRational : IComparable<BigRational>, IEquatable<BigRational>
     /// <param name="left">Left side rational number.</param>
     /// <param name="right">Right side rational number.</param>
     /// <returns>Check that the left rational number is greater than the right rational number.</returns>
-    public static bool operator >(BigRational left, BigRational right)
+    public static bool operator >(Rational left, Rational right)
     {
         return !left.IsNaN && !right.IsNaN && left.CompareTo(right) > 0;
     }
@@ -209,7 +292,7 @@ public struct BigRational : IComparable<BigRational>, IEquatable<BigRational>
     /// <param name="left">Left side rational number.</param>
     /// <param name="right">Right side rational number.</param>
     /// <returns>Check that the left rational number is less than or equal to the right rational number.</returns>
-    public static bool operator <=(BigRational left, BigRational right)
+    public static bool operator <=(Rational left, Rational right)
     {
         return !left.IsNaN && !right.IsNaN && left.CompareTo(right) <= 0;
     }
@@ -220,20 +303,23 @@ public struct BigRational : IComparable<BigRational>, IEquatable<BigRational>
     /// <param name="left">Left side rational number.</param>
     /// <param name="right">Right side rational number.</param>
     /// <returns>Check that the left rational number is greater than or equal to the right rational number.</returns>
-    public static bool operator >=(BigRational left, BigRational right)
+    public static bool operator >=(Rational left, Rational right)
     {
         return !left.IsNaN && !right.IsNaN && left.CompareTo(right) >= 0;
     }
 
-    public bool Equals(BigRational other)
+    private static int GreatestCommonDivisor(int p, int q)
     {
-        if (IsNaN)
-            return other.IsNaN;
-
-        return !other.IsNaN && (Numerator * other.Denominator).Equals(other.Numerator * Denominator);
+        if (q == 0) return p;
+        return GreatestCommonDivisor(q, p % q);
     }
 
-    public int CompareTo(BigRational other)
+    public bool Equals(Rational other)
+    {
+        return CompareTo(other) == 0;
+    }
+
+    public int CompareTo(Rational other)
     {
         if (IsNaN) return other.IsNaN ? 0 : -1;
 
@@ -241,8 +327,8 @@ public struct BigRational : IComparable<BigRational>, IEquatable<BigRational>
 
         if (Sign == other.Sign)
         {
-            var adjDenominator = BigInteger.Abs(Denominator) * new BigInteger(other.Denominator.Sign);
-            var adjOtherDenominator = BigInteger.Abs(other.Denominator) * new BigInteger(Denominator.Sign);
+            var adjDenominator = Math.Abs(Denominator) * Math.Sign(other.Denominator);
+            var adjOtherDenominator = Math.Abs(other.Denominator) * Math.Sign(Denominator);
             return (Numerator * adjOtherDenominator).CompareTo(other.Numerator * adjDenominator);
         }
 
@@ -260,7 +346,7 @@ public struct BigRational : IComparable<BigRational>, IEquatable<BigRational>
 
     public override bool Equals(object? obj)
     {
-        return obj is BigRational other && Equals(other);
+        return obj is Rational other && Equals(other);
     }
 
     public override int GetHashCode()

@@ -1,16 +1,14 @@
-﻿using System;
-using System.Numerics;
+﻿using Rationals;
+using System;
+using System.Globalization;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using Rationals;
 
 namespace WpfApp;
 
 /// <summary>
 ///     Interaction logic for MainWindow.xaml
 /// </summary>
-public partial class MainWindow : Window
+public partial class MainWindow
 {
     /// <summary>
     ///     Ctor.
@@ -18,57 +16,113 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        TextBoxLeftSideTop.TextChanged += Calculate;
-        TextBoxLeftSideBot.TextChanged += Calculate;
-        TextBoxRightSideTop.TextChanged += Calculate;
-        TextBoxRightSideBot.TextChanged += Calculate;
-        RadioButtonPlus.Checked += Calculate;
-        RadioButtonDivision.Checked += Calculate;
-        RadioButtonMinus.Checked += Calculate;
-        RadioButtonMultiplication.Checked += Calculate;
+        ButtonPlus.Click += ButtonPlus_Click;
+        ButtonDivision.Click += ButtonDivision_Click;
+        ButtonMinus.Click += ButtonMinus_Click;
+        ButtonMultiplication.Click += ButtonMultiplication_Click;
     }
 
-    private static bool Validate(TextBox box, out int value, bool isBot = false)
+    private void ButtonMultiplication_Click(object sender, RoutedEventArgs e)
     {
-        if (!int.TryParse(box.Text.Trim(), out value) || isBot && value is 0)
+        try
         {
-            box.Background = Brushes.Red;
-            return false;
+            UpData(out var rationalOne, out var rationalTwo);
+            LoadData(rationalOne * rationalTwo);
         }
-
-        box.Background = Brushes.White;
-        return true;
+        catch (DivideByZeroException)
+        {
+            MessageBox.Show("Нельзя делить на ноль!");
+        }
+        catch (OverflowException)
+        {
+            MessageBox.Show("Число слишком большое или очень маленькое!");
+        }
     }
 
-    private void Calculate(object sender, EventArgs e)
+    private void ButtonMinus_Click(object sender, RoutedEventArgs e)
     {
-        if (!(Validate(TextBoxLeftSideTop, out var lTop) &&
-              Validate(TextBoxLeftSideBot, out var lBot, true) &&
-              Validate(TextBoxRightSideTop, out var rTop) &&
-              Validate(TextBoxRightSideBot, out var rBot, true)))
-            return;
-
-        Rational left = new(
-            new BigInteger(lTop),
-            new BigInteger(lBot)
-        );
-        Rational right = new(
-            new BigInteger(rTop),
-            new BigInteger(rBot)
-        );
-
-        if (RadioButtonDivision.IsChecked == true)
+        try
         {
-            if (!(Validate(TextBoxLeftSideTop, out lTop, true) &&
-                  Validate(TextBoxRightSideTop, out rTop, true)))
-                return;
-            LabelResult.Content = left / right;
+            UpData(out var rationalOne, out var rationalTwo);
+            LoadData(rationalOne - rationalTwo);
         }
-        else if (RadioButtonMinus.IsChecked is true)
-            LabelResult.Content = left - right;
-        else if (RadioButtonMultiplication.IsChecked is true)
-            LabelResult.Content = left * right;
-        else
-            LabelResult.Content = left + right;
+        catch (DivideByZeroException)
+        {
+            MessageBox.Show("Нельзя делить на ноль!");
+        }
+        catch (OverflowException)
+        {
+            MessageBox.Show("Число слишком большое или очень маленькое!");
+        }
+    }
+
+    private void ButtonDivision_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            UpData(out var rationalOne, out var rationalTwo);
+            LoadData(rationalOne / rationalTwo);
+        }
+        catch (DivideByZeroException)
+        {
+            MessageBox.Show("Нельзя делить на ноль!");
+        }
+        catch (OverflowException)
+        {
+            MessageBox.Show("Число слишком большое или очень маленькое!");
+        }
+    }
+
+    private void ButtonPlus_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            UpData(out var rationalOne, out var rationalTwo);
+            LoadData(rationalOne + rationalTwo);
+        }
+        catch (DivideByZeroException)
+        {
+            MessageBox.Show("Нельзя делить на ноль!");
+        }
+        catch (OverflowException)
+        {
+            MessageBox.Show("Число слишком большое или очень маленькое!");
+        }
+    }
+
+    /// <summary>
+    ///     Отображение данных на форме
+    /// </summary>
+    /// <param name="rational">Результат который нужно отобразить</param>
+    private void LoadData(Rational rational)
+    {
+        TextBoxOrd.Text = rational.AsDouble().ToString(CultureInfo.InvariantCulture);
+        TextBoxDecimalsForm.Text = rational.ToString();
+    }
+
+    /// <summary>
+    ///     Запись в переменные <paramref name="rationalOne"/> и <paramref name="rationalTwo"/>
+    ///     Получая переменные заполняются из формы
+    /// </summary>
+    /// <param name="rationalOne">Первое число</param>
+    /// <param name="rationalTwo">Второе число</param>
+    private void UpData(out Rational rationalOne, out Rational rationalTwo)
+    {
+        rationalOne = AssemblyNumber(TextBoxInputInteger1.Text, TextBoxInputNumerator1.Text, TextBoxInputDenominator1.Text);
+        rationalTwo = AssemblyNumber(TextBoxInputInteger2.Text, TextBoxInputNumerator2.Text, TextBoxInputDenominator2.Text);
+    }
+
+    /// <summary>
+    ///     Сборка рационального числа из целой части, числителя дроби и знаменателя.
+    /// </summary>
+    /// <param name="integerPart">Целая часть дроби.</param>
+    /// <param name="numerator">Числитель дроби.</param>
+    /// <param name="denominator">Знаменатель дроби.</param>
+    /// <returns>Рациональное число.</returns>
+    private static Rational AssemblyNumber(string integerPart, string numerator, string denominator)
+    {
+        Rational integer = new(integerPart);
+        Rational fractional = new(numerator + '/' + denominator);
+        return integer + fractional;
     }
 }
