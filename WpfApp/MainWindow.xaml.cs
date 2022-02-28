@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Rationals;
+using System;
 using System.Globalization;
 using System.Windows;
-using Rationals;
 
 namespace WpfApp;
 
@@ -24,29 +24,70 @@ public partial class MainWindow
 
     private void ButtonMultiplication_Click(object sender, RoutedEventArgs e)
     {
-        UpData(out var rationalOne, out var rationalTwo);
-        LoadData(rationalOne * rationalTwo);
+        try
+        {
+            UpData(out var rationalOne, out var rationalTwo);
+            LoadData(rationalOne * rationalTwo);
+        }
+        catch (DivideByZeroException)
+        {
+            MessageBox.Show("Нельзя делить на ноль!");
+        }
+        catch (OverflowException)
+        {
+            MessageBox.Show("Число слишком большое или очень маленькое!");
+        }
     }
 
     private void ButtonMinus_Click(object sender, RoutedEventArgs e)
     {
-        UpData(out var rationalOne, out var rationalTwo);
-        var rational = rationalOne - rationalTwo;
-        LoadData(rational);
+        try
+        {
+            UpData(out var rationalOne, out var rationalTwo);
+            LoadData(rationalOne - rationalTwo);
+        }
+        catch (DivideByZeroException)
+        {
+            MessageBox.Show("Нельзя делить на ноль!");
+        }
+        catch (OverflowException)
+        {
+            MessageBox.Show("Число слишком большое или очень маленькое!");
+        }
     }
 
     private void ButtonDivision_Click(object sender, RoutedEventArgs e)
     {
-        UpData(out var rationalOne, out var rationalTwo);
-        var rational = rationalOne / rationalTwo;
-        LoadData(rational);
+        try
+        {
+            UpData(out var rationalOne, out var rationalTwo);
+            LoadData(rationalOne / rationalTwo);
+        }
+        catch (DivideByZeroException)
+        {
+            MessageBox.Show("Нельзя делить на ноль!");
+        }
+        catch (OverflowException)
+        {
+            MessageBox.Show("Число слишком большое или очень маленькое!");
+        }
     }
 
     private void ButtonPlus_Click(object sender, RoutedEventArgs e)
     {
-        UpData(out var rationalOne, out var rationalTwo);
-        var rational = rationalOne + rationalTwo;
-        LoadData(rational);
+        try
+        {
+            UpData(out var rationalOne, out var rationalTwo);
+            LoadData(rationalOne + rationalTwo);
+        }
+        catch (DivideByZeroException)
+        {
+            MessageBox.Show("Нельзя делить на ноль!");
+        }
+        catch (OverflowException)
+        {
+            MessageBox.Show("Число слишком большое или очень маленькое!");
+        }
     }
 
     /// <summary>
@@ -60,23 +101,15 @@ public partial class MainWindow
     }
 
     /// <summary>
-    ///     Запись в переменные
-    ///     <param name="rationalOne" />
-    ///     и
-    ///     <param name="rationalTwo" />
+    ///     Запись в переменные <paramref name="rationalOne"/> и <paramref name="rationalTwo"/>
     ///     Получая переменные заполняются из формы
     /// </summary>
     /// <param name="rationalOne">Первое число</param>
     /// <param name="rationalTwo">Второе число</param>
-    /// <exception cref="NotImplementedException"></exception>
     private void UpData(out Rational rationalOne, out Rational rationalTwo)
     {
-        // Ввод данных из TexBox в переменные
-        rationalOne = AssemblyNumber(TextBoxInputInteger1.Text, TextBoxInputNumerator1.Text,
-            TextBoxInputDenominator1.Text);
-
-        rationalTwo = AssemblyNumber(TextBoxInputInteger2.Text, TextBoxInputNumerator2.Text,
-            TextBoxInputDenominator2.Text);
+        rationalOne = AssemblyNumber(TextBoxInputInteger1.Text, TextBoxInputNumerator1.Text, TextBoxInputDenominator1.Text);
+        rationalTwo = AssemblyNumber(TextBoxInputInteger2.Text, TextBoxInputNumerator2.Text, TextBoxInputDenominator2.Text);
     }
 
     /// <summary>
