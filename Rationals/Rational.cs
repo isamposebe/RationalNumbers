@@ -29,7 +29,7 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
     /// </summary>
     /// <param name="number">Double number that we convert to rational number</param>
     /// <param name="bound">Max lenght of denominator</param>
-    public Rational(double number, double bound = 4096.0)
+    public Rational(double number, double bound = 4096.0) : this()
     {
         if (number == 0.0)
         {
@@ -37,6 +37,69 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
             Denominator = 1;
         }
 
+        var (best, temp) = FindBestApproximation(number, bound);
+
+        Numerator = (int) Math.Round(best * temp) * Math.Sign(number);
+        Denominator = best;
+    }
+
+    /// <summary>
+    ///     Ctor.
+    ///     For ex.: "1/3"; "1"; "   1/3   "; "0.666";
+    /// </summary>
+    /// <param name="input">String.</param>
+    /// <exception cref="DivideByZeroException">Throws when denominator is zero.</exception>
+    public Rational(string input)
+    {
+        var trimmed = input.Trim();
+        if (trimmed.Contains('/'))
+        {
+            var parsed = trimmed.Split('/').Select(int.Parse).ToArray();
+            if (parsed[1] == 0)
+            {
+                throw new DivideByZeroException("Denominator cannot be zero.");
+            }
+
+            Numerator = parsed[0];
+            Denominator = parsed[1];
+        }
+        else if (trimmed.Split('.').Length is 2 or 1)
+        {
+            double number;
+            try
+            {
+                number = double.Parse(trimmed);
+            }
+            catch (FormatException)
+            {
+                number = 0;
+            }
+
+            if (number == 0.0)
+            {
+                Numerator = 0;
+                Denominator = 1;
+            }
+
+            var (best, temp) = FindBestApproximation(number, 4096);
+
+            Numerator = (int) Math.Round(best * temp) * Math.Sign(number);
+            Denominator = best;
+        }
+        else
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="number"></param>
+    /// <param name="bound"></param>
+    /// <returns></returns>
+    private static (int best, double temp) FindBestApproximation(double number, double bound)
+    {
         var temp = Math.Abs(number);
         var best = 1;
         var bestError = double.MaxValue;
@@ -49,8 +112,7 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
             bestError = error;
         }
 
-        Numerator = (int) Math.Round(best * temp) * Math.Sign(number);
-        Denominator = best;
+        return (best, temp);
     }
 
     /// <summary>
