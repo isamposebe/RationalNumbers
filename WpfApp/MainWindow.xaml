@@ -6,94 +6,84 @@
         mc:Ignorable="d"
         Title="Rationals" Height="450" Width="1024"
         WindowStartupLocation="CenterScreen">
-    <Window.Resources>
-        <ResourceDictionary>
-            <ScaleTransform x:Key="WindowScaleTransform" ScaleX="2" ScaleY="2" />
-        </ResourceDictionary>
-    </Window.Resources>
-
-
-    <Grid Grid.Column="1" >
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.25*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="0.5*"/>
-
+            <RowDefinition Height="0.25*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="0.5*" />
         </Grid.RowDefinitions>
 
         <!--Заголовок-->
-        <Viewbox Grid.Row="0"  Grid.Column="0">
+        <Viewbox Grid.Row="0" Grid.Column="0">
             <Label>Рациональные числа</Label>
         </Viewbox>
-        <!--Ввод даных-->
+
+        <!--Ввод данных-->
         <Grid Grid.Row="1">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
+
             <!--Блок 1 числа-->
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="0.1*"/>
-                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="0.1*" />
+                    <RowDefinition Height="1*" />
 
 
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
                 <!--Заголовок-->
-                <Viewbox Grid.Row="0"  Grid.ColumnSpan ="2">
+                <Viewbox Grid.Row="0" Grid.ColumnSpan="2">
                     <Label>Введите 1 число:</Label>
                 </Viewbox>
-                <Viewbox Grid.Row="1"  Grid.Column="0">
+                <Viewbox Grid.Row="1" Grid.Column="0">
                     <Label>целое число</Label>
                 </Viewbox>
-                <Viewbox Grid.Row="1"  Grid.Column="1">
+                <Viewbox Grid.Row="1" Grid.Column="1">
                     <Label>десятичная дробь</Label>
                 </Viewbox>
 
                 <!--Поля для ввода-->
-                <Viewbox Grid.Row="2"  Grid.Column="0" Grid.RowSpan="3">
-                    <TextBox AcceptsReturn="True" Name="TextBoxInputInteger1" Text="" BorderThickness="0"/>
+                <Viewbox Grid.Row="2" Grid.Column="0" Grid.RowSpan="3">
+                    <TextBox AcceptsReturn="True" Name="TextBoxInputInteger1" Text="" BorderThickness="0" />
                 </Viewbox>
 
-                <Viewbox Grid.Row="2"  Grid.Column="1">
-                    <TextBox AcceptsReturn="True" Name="TextBoxInputNumerator1" Text="13" BorderThickness="0"/>
+                <Viewbox Grid.Row="2" Grid.Column="1">
+                    <TextBox AcceptsReturn="True" Name="TextBoxInputNumerator1" Text="13" BorderThickness="0" />
                 </Viewbox>
-                <Polyline Stroke="Black" StrokeThickness="15" Grid.Row="3" Grid.Column="1" StrokeEndLineCap="Triangle"  SnapsToDevicePixels="True"
-         Points="10,10  200,10" >
-                </Polyline>
-
-                <!--<Separator Grid.Row="3" Grid.Column="1"/>-->
-
-
-                <Viewbox Grid.Row="4"  Grid.Column="1">
-                    <TextBox AcceptsReturn="True" Name="TextBoxInputDenominator1" Text="12" BorderThickness="0"/>
+                <Polyline Stroke="Black" StrokeThickness="15" Grid.Row="3" Grid.Column="1" StrokeEndLineCap="Triangle"
+                          SnapsToDevicePixels="True"
+                          Points="10,10  200,10" />
+                <Viewbox Grid.Row="4" Grid.Column="1">
+                    <TextBox AcceptsReturn="True" Name="TextBoxInputDenominator1" Text="12" BorderThickness="0" />
                 </Viewbox>
             </Grid>
+
             <!--Блок кнопок-->
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
                 <!--Заголовок-->
                 <Button Margin="4" Grid.Row="0" Grid.Column="0" Name="ButtonPlus">
@@ -117,61 +107,62 @@
                     </Viewbox>
                 </Button>
             </Grid>
+
             <!--Блок 2 числа-->
             <Grid Grid.Column="2">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="0.1*"/>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="0.1*" />
 
-                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*" />
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
                 <!--Заголовок-->
-                <Viewbox Grid.Row="0"  Grid.ColumnSpan ="2">
+                <Viewbox Grid.Row="0" Grid.ColumnSpan="2">
                     <Label>Введите 2 число:</Label>
                 </Viewbox>
-                <Viewbox Grid.Row="1"  Grid.Column="0">
+                <Viewbox Grid.Row="1" Grid.Column="0">
                     <Label>целое число</Label>
                 </Viewbox>
-                <Viewbox Grid.Row="1"  Grid.Column="1">
+                <Viewbox Grid.Row="1" Grid.Column="1">
                     <Label>десятичная дробь</Label>
                 </Viewbox>
 
                 <!--Поля для ввода-->
-                <Viewbox Grid.Row="2"  Grid.Column="0" Grid.RowSpan="3">
-                    <TextBox AcceptsReturn="True" Name="TextBoxInputInteger2" Text="2" BorderThickness="0"/>
+                <Viewbox Grid.Row="2" Grid.Column="0" Grid.RowSpan="3">
+                    <TextBox AcceptsReturn="True" Name="TextBoxInputInteger2" Text="2" BorderThickness="0" />
                 </Viewbox>
 
-                <Viewbox Grid.Row="2"  Grid.Column="1">
-                    <TextBox AcceptsReturn="True" Name="TextBoxInputNumerator2" Text="1" BorderThickness="0"/>
+                <Viewbox Grid.Row="2" Grid.Column="1">
+                    <TextBox AcceptsReturn="True" Name="TextBoxInputNumerator2" Text="1" BorderThickness="0" />
                 </Viewbox>
-                
-                <Polyline Stroke="Black" StrokeThickness="15" Grid.Row="3" Grid.Column="1" StrokeEndLineCap="Triangle"  SnapsToDevicePixels="True"
-         Points="10,10  200,10" >
-                </Polyline>
-                
-                <Viewbox Grid.Row="4"  Grid.Column="1">
-                    <TextBox AcceptsReturn="True" Name="TextBoxInputDenominator2" Text="3" BorderThickness="0"/>
+
+                <Polyline Stroke="Black" StrokeThickness="15" Grid.Row="3" Grid.Column="1" StrokeEndLineCap="Triangle"
+                          SnapsToDevicePixels="True"
+                          Points="10,10  200,10" />
+
+                <Viewbox Grid.Row="4" Grid.Column="1">
+                    <TextBox AcceptsReturn="True" Name="TextBoxInputDenominator2" Text="3" BorderThickness="0" />
                 </Viewbox>
             </Grid>
-
         </Grid>
+
         <!--Вывод данных-->
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <!--Заголовок-->
             <Viewbox Grid.Row="0" Grid.Column="0">
@@ -181,17 +172,13 @@
                 <Label>Обыкновенные вида</Label>
             </Viewbox>
             <!--Отображение результата-->
-            <Viewbox Grid.Row="1"  Grid.Column="0">
-                <TextBox AcceptsReturn="True" Name="TextBoxOrd" Text="Тута Результат" BorderThickness="0"/>
-            </Viewbox>
-            
-            <Viewbox Grid.Row="1"  Grid.Column="2">
-                <TextBox AcceptsReturn="True" Name="TextBoxDecimalsForm" Text="Тут Результат" BorderThickness="0"/>
+            <Viewbox Grid.Row="1" Grid.Column="0">
+                <TextBox AcceptsReturn="True" Name="TextBoxOrd" Text="Тут Результат" BorderThickness="0" />
             </Viewbox>
 
+            <Viewbox Grid.Row="1" Grid.Column="1">
+                <TextBox AcceptsReturn="True" Name="TextBoxDecimalsForm" Text="Тут Результат" BorderThickness="0" />
+            </Viewbox>
         </Grid>
-
     </Grid>
-
-
 </Window>

@@ -55,7 +55,7 @@ public sealed class RationalNumbersTest
         var a = new Rational(1);
         var b = new Rational(2);
         var d = new Rational(2, 3);
-        var c = (a / b) + d;
+        var c = a / b + d;
         Assert.True(c.Equals(new Rational(7, 6)));
     }
 }

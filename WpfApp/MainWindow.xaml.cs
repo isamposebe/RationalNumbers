@@ -1,15 +1,14 @@
-﻿using Rationals;
-using System;
+﻿using System;
+using System.Globalization;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
+using Rationals;
 
 namespace WpfApp;
 
 /// <summary>
 ///     Interaction logic for MainWindow.xaml
 /// </summary>
-public partial class MainWindow : Window
+public partial class MainWindow
 {
     /// <summary>
     ///     Ctor.
@@ -26,60 +25,53 @@ public partial class MainWindow : Window
     private void ButtonMultiplication_Click(object sender, RoutedEventArgs e)
     {
         UpData(out var rationalOne, out var rationalTwo);
-        loadData(rationalOne * rationalTwo);
+        LoadData(rationalOne * rationalTwo);
     }
 
     private void ButtonMinus_Click(object sender, RoutedEventArgs e)
     {
-        Rational rationalOne = new Rational();
-        Rational rationalTwo = new Rational();
-        UpData(out rationalOne, out rationalTwo);
-
-        Rational rational = rationalOne - rationalTwo;
-        loadData(rational);
+        UpData(out var rationalOne, out var rationalTwo);
+        var rational = rationalOne - rationalTwo;
+        LoadData(rational);
     }
 
     private void ButtonDivision_Click(object sender, RoutedEventArgs e)
     {
-        Rational rationalOne = new Rational();
-        Rational rationalTwo = new Rational();
-        UpData(out rationalOne, out rationalTwo);
-
-        Rational rational = rationalOne / rationalTwo;
-        loadData(rational);
+        UpData(out var rationalOne, out var rationalTwo);
+        var rational = rationalOne / rationalTwo;
+        LoadData(rational);
     }
 
     private void ButtonPlus_Click(object sender, RoutedEventArgs e)
     {
-        Rational rationalOne = new Rational();
-        Rational rationalTwo = new Rational();
-        UpData(out rationalOne, out rationalTwo);
-
-        Rational rational = rationalOne + rationalTwo;
-        loadData(rational);
+        UpData(out var rationalOne, out var rationalTwo);
+        var rational = rationalOne + rationalTwo;
+        LoadData(rational);
     }
 
     /// <summary>
     ///     Отображение данных на форме
     /// </summary>
     /// <param name="rational">Результат который нужно отобразить</param>
-    private void loadData(Rational rational)
+    private void LoadData(Rational rational)
     {
-        TextBoxOrd.Text = rational.AsDouble().ToString();
+        TextBoxOrd.Text = rational.AsDouble().ToString(CultureInfo.InvariantCulture);
         TextBoxDecimalsForm.Text = rational.ToString();
     }
 
     /// <summary>
-    ///     Запись в переменые <param name="rationalOne"> и <param name="rationalTwo">
-    ///     Получая переменые заполняются из формы
+    ///     Запись в переменные
+    ///     <param name="rationalOne" />
+    ///     и
+    ///     <param name="rationalTwo" />
+    ///     Получая переменные заполняются из формы
     /// </summary>
     /// <param name="rationalOne">Первое число</param>
     /// <param name="rationalTwo">Второе число</param>
     /// <exception cref="NotImplementedException"></exception>
-    private static void UpData(out Rational rationalOne, out Rational rationalTwo)
+    private void UpData(out Rational rationalOne, out Rational rationalTwo)
     {
-
-        // Ввод данных из TexBox в переменые
+        // Ввод данных из TexBox в переменные
         rationalOne = AssemblyNumber(ParseInt(TextBoxInputInteger1.Text),
             ParseInt(TextBoxInputNumerator1.Text),
             ParseDenominator(TextBoxInputDenominator1.Text));
@@ -92,7 +84,7 @@ public partial class MainWindow : Window
     /// <summary>
     ///     Читаем и проверяем
     /// </summary>
-    /// <param name="str">Число ввиде строки</param>
+    /// <param name="str">Число в виде строки</param>
     /// <returns>число в int</returns>
     private static int ParseInt(string str)
     {
@@ -100,7 +92,7 @@ public partial class MainWindow : Window
     }
 
     /// <summary>
-    ///     Чтение и проверка знаменателя на валидные данные.
+    ///     Чтение и проверка знаменателя на "правильные" данные.
     /// </summary>
     /// <param name="str">Число в виде строки.</param>
     /// <exception cref="DivideByZeroException">Деление на ноль.</exception>

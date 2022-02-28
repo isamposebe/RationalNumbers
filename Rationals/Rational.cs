@@ -41,17 +41,15 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
         var best = 1;
         var bestError = double.MaxValue;
 
-        for (int i = 1; i < bound; i++)
+        for (var i = 1; i < bound; i++)
         {
             var error = Math.Abs(i * temp - Math.Round(i * temp));
-            if (error < bestError)
-            {
-                best = i;
-                bestError = error;
-            }
+            if (!(error < bestError)) continue;
+            best = i;
+            bestError = error;
         }
 
-        Numerator = (int)Math.Round(best * temp) * Math.Sign(number);
+        Numerator = (int) Math.Round(best * temp) * Math.Sign(number);
         Denominator = best;
     }
 
@@ -61,7 +59,7 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
     /// <returns>Division between numerator and denominator.</returns>
     public double AsDouble()
     {
-        return (double)Numerator / Denominator;
+        return (double) Numerator / Denominator;
     }
 
     /// <summary>
@@ -70,7 +68,7 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
     /// <returns>Reference to simplified version of a rational number.</returns>
     public Rational Simplify()
     {
-        int gcd = GreatestCommonDivisor(Numerator, Denominator);
+        var gcd = GreatestCommonDivisor(Numerator, Denominator);
         return new Rational(Numerator / gcd, Denominator / gcd);
     }
 
@@ -247,12 +245,10 @@ public struct Rational : IComparable<Rational>, IEquatable<Rational>
     {
         return !left.IsNaN && !right.IsNaN && left.CompareTo(right) >= 0;
     }
+
     private static int GreatestCommonDivisor(int p, int q)
     {
-        if (q == 0)
-        {
-            return p;
-        }
+        if (q == 0) return p;
         return GreatestCommonDivisor(q, p % q);
     }
 
