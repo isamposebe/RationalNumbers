@@ -38,7 +38,18 @@ public partial class MainWindow
     private void ButtonDivision_Click(object sender, RoutedEventArgs e)
     {
         UpData(out var rationalOne, out var rationalTwo);
-        var rational = rationalOne / rationalTwo;
+        Rational rational = new();
+        Rational check = new("0/1");
+
+        if (rationalTwo == check)
+        {
+            rational = AssemblyNumber("0", "0", "0");
+        }
+        else
+        {
+            rational = AssemblyNumber("0", rationalOne.ToString(), rationalTwo.ToString());
+        }
+
         LoadData(rational);
     }
 
@@ -88,8 +99,22 @@ public partial class MainWindow
     /// <returns>Рациональное число.</returns>
     private static Rational AssemblyNumber(string integerPart, string numerator, string denominator)
     {
-        Rational integer = new(integerPart);
-        Rational fractional = new(numerator + '/' + denominator);
+        Rational integer = new();
+        Rational fractional = new();
+        try
+        {
+            integer = new(integerPart);
+            fractional = new(numerator + '/' + denominator);
+        }
+        catch (Exception Eorr)
+        {
+
+            MessageBox.Show(Eorr.Message.ToString());
+            fractional = new("0/1");
+            
+        }
+
+
         return integer + fractional;
     }
 }
