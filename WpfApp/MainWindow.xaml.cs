@@ -2,6 +2,7 @@
 using System;
 using System.Globalization;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace WpfApp;
 
@@ -91,7 +92,7 @@ public partial class MainWindow
     }
 
     /// <summary>
-    ///     Отображение данных на форме
+    ///     Display data on the form
     /// </summary>
     /// <param name="rational">Результат который нужно отобразить</param>
     private void LoadData(Rational rational)
@@ -101,19 +102,29 @@ public partial class MainWindow
     }
 
     /// <summary>
-    ///     Запись в переменные <paramref name="rationalOne"/> и <paramref name="rationalTwo"/>
-    ///     Получая переменные заполняются из формы
+    ///     Write to variables <paramref name="rationalOne"/> And <paramref name="rationalTwo"/>
+    ///     Getting variables are filled from the form
     /// </summary>
     /// <param name="rationalOne">Первое число</param>
     /// <param name="rationalTwo">Второе число</param>
     private void UpData(out Rational rationalOne, out Rational rationalTwo)
     {
-        rationalOne = AssemblyNumber(TextBoxInputInteger1.Text, TextBoxInputNumerator1.Text, TextBoxInputDenominator1.Text);
-        rationalTwo = AssemblyNumber(TextBoxInputInteger2.Text, TextBoxInputNumerator2.Text, TextBoxInputDenominator2.Text);
+        try
+        {
+            rationalOne = AssemblyNumber(TextBoxInputInteger1.Text, TextBoxInputNumerator1.Text, TextBoxInputDenominator1.Text);
+            rationalTwo = AssemblyNumber(TextBoxInputInteger2.Text, TextBoxInputNumerator2.Text, TextBoxInputDenominator2.Text);
+
+        }
+        catch
+        {
+            rationalOne = new Rational();
+            rationalTwo = new Rational();
+            MessageBox.Show("Вы вели неправельные даные, проверте ввод");
+        }
     }
 
     /// <summary>
-    ///     Сборка рационального числа из целой части, числителя дроби и знаменателя.
+    ///     Assembly of a rational number from the integer part, the number of fractions and denominator.
     /// </summary>
     /// <param name="integerPart">Целая часть дроби.</param>
     /// <param name="numerator">Числитель дроби.</param>
@@ -125,4 +136,7 @@ public partial class MainWindow
         Rational fractional = new(numerator + '/' + denominator);
         return integer + fractional;
     }
+    
+
+
 }
