@@ -115,11 +115,11 @@ public partial class MainWindow
             rationalTwo = AssemblyNumber(TextBoxInputInteger2.Text, TextBoxInputNumerator2.Text, TextBoxInputDenominator2.Text);
 
         }
-        catch
+        catch (Exception eorr)
         {
-            rationalOne = new Rational();
-            rationalTwo = new Rational();
-            MessageBox.Show("Вы вели неправельные даные, проверте ввод");
+            rationalOne = new Rational(0);
+            rationalTwo = new Rational(1);
+            MessageBox.Show("Вы вели неправельные даные, проверте ввод\n" + eorr.Message.ToString());
         }
     }
 
@@ -136,7 +136,7 @@ public partial class MainWindow
         Rational fractional = new(numerator + '/' + denominator);
         return integer + fractional;
     }
-    
+
 
 
 }
